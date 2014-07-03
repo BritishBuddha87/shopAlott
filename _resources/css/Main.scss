@@ -1,0 +1,17 @@
+﻿$maincolour: Orange;
+$mainfontsize: 10px;
+$mainwidth: 1000px;
+
+body {
+
+}
+#outsidewrapper{
+width: $mainwidth + 20;
+margin: 0 auto;
+}
+
+#mainpage{
+@extend #outsidewrapper;
+width: $mainwidth;
+}
+

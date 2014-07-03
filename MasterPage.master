@@ -1,0 +1,124 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<%@ Import Namespace="InvertedSoftware.ShoppingCart.Common" %>
+
+<%@ Register src="UserControls/MenuControl.ascx" tagname="MenuControl" tagprefix="uc1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+	<title></title>
+	<asp:ContentPlaceHolder id="head" runat="server">
+	</asp:ContentPlaceHolder>
+	<style>
+	#facebox {
+ 
+		/* overlay is hidden before loading */
+		display:none;
+ 
+		/* standard decorations */
+		width:400px;
+		border:10px solid #666;
+ 
+		/* for modern browsers use semi-transparent color on the border. nice! */
+		border:10px solid rgba(82, 82, 82, 0.698);
+ 
+		/* hot CSS3 features for mozilla and webkit-based browsers (rounded borders) */
+		-moz-border-radius:8px;
+		-webkit-border-radius:8px;
+	}
+ 
+	#facebox div {
+		padding:10px;
+		border:1px solid #3B5998;
+		background-color:#fff;
+		font-family:"lucida grande",tahoma,verdana,arial,sans-serif
+	}
+ 
+	#facebox h2 {
+		margin:-11px;
+		margin-bottom:0px;
+		color:#fff;
+		background-color:#6D84B4;
+		padding:5px 10px;
+		border:1px solid #3B5998;
+		font-size:20px;
+	}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" language="type="text/javascript"></script>
+	<script src="http://cdn.jquerytools.org/1.2.2/jquery.tools.min.js"></script>
+</head>
+<body class="template">
+	<form id="form1" runat="server">
+	<asp:ScriptManager ID="ScriptManager1" runat="server" EnableCdn="True">
+		<Services>
+			<asp:ServiceReference Path="Services/InventoryService.svc" />
+			<asp:ServiceReference Path="Services/HistoryService.svc" />
+		</Services>
+
+			</asp:ScriptManager>
+   <table cellpadding="3" cellspacing="3" border="0" width="100%">
+   <tr>
+	<td colspan="2" align="center"><h1><span class="allcaps"><%= StoreConfiguration.GetConfigurationValue(ConfigurationKey.StoreName) %></span></h1></td>
+   </tr>
+   <tr>
+	<td colspan="2" align="right">
+				<asp:LoginView id="LoginView1" runat="server">
+					<AnonymousTemplate>
+						<a href="Login.aspx">Login</a>
+					</AnonymousTemplate>
+					<LoggedInTemplate>
+						Hello
+						<asp:LoginName id="LoginName1" runat="Server"></asp:LoginName>.<br />
+						<asp:LoginStatus ID="LoginStatus1" runat="server" />
+					</LoggedInTemplate>
+					<RoleGroups>
+						<asp:RoleGroup Roles="Admin">
+							<ContentTemplate>
+								<asp:LoginName id="LoginName2" runat="Server"></asp:LoginName>, you
+								are logged in as an Admin..<br />
+						<asp:LoginStatus ID="LoginStatus1" runat="server" />
+							</ContentTemplate>
+						</asp:RoleGroup>
+						<asp:RoleGroup Roles="SuperAdmin">
+							<ContentTemplate>
+								<asp:LoginName id="LoginName3" runat="Server"></asp:LoginName>, you
+								are logged in as a Super Admin..<br />
+						<asp:LoginStatus ID="LoginStatus1" runat="server" />
+							</ContentTemplate>
+						</asp:RoleGroup>
+					</RoleGroups>
+				</asp:LoginView>
+				<br /><br />
+				<asp:TextBox ID="SearchTextBox" AutoPostBack="true" 
+					onclick="javascript:this.value='';" runat="server" Text="Search" 
+					ontextchanged="SearchTextBox_TextChanged"></asp:TextBox>
+</td>
+   </tr>
+   <tr>
+		<td style="width:0%" valign="top">
+			<uc1:MenuControl ID="MenuControl1" runat="server" />
+		</td>
+		<td><asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+			
+			</asp:ContentPlaceHolder></td>
+   </tr>
+   </table>
+	</form>
+	<center>Open Source E Commerce Software<br /><a href="http://shoppingcartnet.codeplex.com/" target="_blank">Shopping Cart .NET</a></center>
+
+	<div id="facebox">
+	<div>
+		<h2>Hello Shopper</h2>
+		<p>
+		<div id="messageDiv"></div>
+		</p>
+		<p>
+			<button class="close"> Close </button>
+		</p>
+	</div>
+</div>
+
+</body>
+</html>
